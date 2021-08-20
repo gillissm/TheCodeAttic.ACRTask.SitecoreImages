@@ -10,17 +10,17 @@ steps:
     - $Registry/$ComposeProjectName/mssql-spe:$ID
     - $Registry/$ComposeProjectName/mssql-spe:latest
   - id: mssql-hrz
-    build: -t $Registry/$ComposeProjectName/mssql-hrz:$ID -f $ServicesPath/mssql-hrz/Dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/mssql-spe:$ID --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
+    build: -t $Registry/$ComposeProjectName/mssql-hrz:$ID -f $ServicesPath/mssql-hrz/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-spe:$ID --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
     when: ["mssql-spe"]
   - push:
     - $Registry/$ComposeProjectName/mssql-hrz:$ID
     - $Registry/$ComposeProjectName/mssql-hrz:latest
   - id: mssql-sxa
-    build: -t $Registry$ComposeProjectName/mssql-sxa:$ID -f $ServicesPath/mssql-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/mssql-spe:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    build: -t $Registry/$ComposeProjectName/mssql-sxa:$ID -f $ServicesPath/mssql-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-spe:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
     when: ["mssql-spe"]
   - push:
-    - $Registry$ComposeProjectName/mssql-sxa:$ID
-    - $Registry$ComposeProjectName/mssql-sxa:latest
+    - $Registry/$ComposeProjectName/mssql-sxa:$ID
+    - $Registry/$ComposeProjectName/mssql-sxa:latest
   - id: mssql-sxa-hrz
-    build: -t $Registry$ComposeProjectName/mssql-sxa-hrz:$ID -f $ServicesPath/mssql-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/mssql-hrz:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    build: -t $Registry/$ComposeProjectName/mssql-sxa-hrz:$ID -f $ServicesPath/mssql-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-hrz:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
     when: ["mssql-hrz"]
