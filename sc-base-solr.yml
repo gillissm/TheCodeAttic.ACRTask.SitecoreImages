@@ -4,14 +4,14 @@ alias:
     - env.yml
 steps:
   - id: solr-init
-    build: -t $Registry/$ComposeProjectName/solr-init:$ID -t $Registry/$ComposeProjectName/solr-init:latest -f $ServicesPath/solr/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SOLRBaseImage:$SitecoreVersion
+    build: -t $Registry/$ComposeProjectName/solr-init:$TagVersion -t $Registry/$ComposeProjectName/solr-init:latest -f $ServicesPath/solr/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SOLRBaseImage:$SitecoreVersion
     when: ["-"]
   - push:
-    - $Registry/$ComposeProjectName/solr-init:$ID
+    - $Registry/$ComposeProjectName/solr-init:$TagVersion
     - $Registry/$ComposeProjectName/solr-init:latest
   - id: solr-init-sxa
-    build: -t $Registry/$ComposeProjectName/solr-init-sxa:$ID -t $Registry/$ComposeProjectName/solr-init-sxa:latest -f $ServicesPath/solr-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/solr-init:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    build: -t $Registry/$ComposeProjectName/solr-init-sxa:$TagVersion -t $Registry/$ComposeProjectName/solr-init-sxa:latest -f $ServicesPath/solr-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/solr-init:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
     when: ["solr-init"]    
   - push:
-    - $Registry/$ComposeProjectName/solr-init-sxa:$ID
+    - $Registry/$ComposeProjectName/solr-init-sxa:$TagVersion
     - $Registry/$ComposeProjectName/solr-init-sxa:latest
