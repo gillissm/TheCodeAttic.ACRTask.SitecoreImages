@@ -82,7 +82,7 @@ steps:
     - $Registry$ComposeProjectName/xdbsearchworker:$ID
     - $Registry$ComposeProjectName/xdbsearchworker:latest
   - id: xdbautomationworker
-    build: -t $Registry$ComposeProjectName/xdbautomationworker:$ID -f $ServicesPath/xdbautomationworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBAUTOMATIONBaseImage:$SitecoreVersion
+    build: -t $Registry$ComposeProjectName/xdbautomationworker:$ID -f $ServicesPath/xdbautomationworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBAutomationBaseImage:$SitecoreVersion
     when: ["-"]
   - push:
     - $Registry$ComposeProjectName/xdbautomationworker:$ID
