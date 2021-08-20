@@ -1,0 +1,14 @@
+version: v1.1.0
+alias:
+  src:
+    - env.yml
+steps:
+  - id: solr-init-sxa
+    build: -t $Registry$ComposeProjectName/solr-init-sxa:$ID -f $ServicesPath/solr-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/solr-init:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["solr-init"]
+  - id: id
+    build: -t $Registry$ComposeProjectName/id:$ID -f $ServicesPath/id/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$IDBaseImage:$SitecoreVersion
+    when: ["-"]
+  - push:
+    - $Registry$ComposeProjectName/id:$ID
+    - $Registry$ComposeProjectName/id:latest

@@ -4,7 +4,7 @@ alias:
     - env.yml
 steps:
   - id: mssql-spe
-    build: -t $Registry/$ComposeProjectName/mssql-spe:$ID -f $ServicesPath/mssql-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SqlBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage
+    build: -t $Registry/$ComposeProjectName/mssql-spe:$ID -f $ServicesPath/mssql-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SQLBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage
     when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/mssql-spe:$ID
