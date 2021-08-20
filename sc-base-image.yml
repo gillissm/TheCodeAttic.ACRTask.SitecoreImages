@@ -1,0 +1,102 @@
+version: v1.1.0
+alias:
+  src:
+    - env.yml
+steps:
+  - id: mssql-spe
+    build: -t $Registry/$ComposeProjectName/mssql-spe:$ID -f $ServicesPath/mssql-spe/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SqlBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage
+    when: ["-"]
+  - push:
+    - $Registry/$ComposeProjectName/mssql-spe:$ID
+    - $Registry/$ComposeProjectName/mssql-spe:latest
+  - id: mssql-spe-hrz
+    build: -t $Registry/$ComposeProjectName/mssql-hrz:$ID -f $ServicesPath/mssql-hrz/dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/mssql-spe:$ID --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
+    when: ["mssql-spe"]
+  - push:
+    - $Registry/$ComposeProjectName/mssql-hrz:$ID
+    - $Registry/$ComposeProjectName/mssql-hrz:latest
+  - id: mssql-sxa
+    build: -t $Registry$ComposeProjectName/mssql-sxa:$ID -f $ServicesPath/mssql-sxa/dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/mssql-spe:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["mssql-spe"]
+  - push:
+    - $Registry$ComposeProjectName/mssql-sxa:$ID
+    - $Registry$ComposeProjectName/mssql-sxa:latest
+  - id: mssql-sxa-hrz
+    build: -t $Registry$ComposeProjectName/mssql-sxa-hrz:$ID -f $ServicesPath/mssql-sxa/dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/mssql-hrz:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["mssql-hrz"]
+  - id: solr-init
+    build: -t $Registry$ComposeProjectName/solr-init:$ID -f $ServicesPath/solr/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SOLRBaseImage:$SitecoreVersion
+    when: ["-"]
+  - push:
+    - $Registry$ComposeProjectName/solr-init:$ID
+    - $Registry$ComposeProjectName/solr-init:latest
+  - id: solr-init-sxa
+    build: -t $Registry$ComposeProjectName/solr-init-sxa:$ID -f $ServicesPath/solr-sxa --build-arg BASE_IMAGE=$Registry$ComposeProjectName/solr-init:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["solr-init"]
+  - id: id
+    build: -t $Registry$ComposeProjectName/id:$ID -f $ServicesPath/id/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$IDBaseImage:$SitecoreVersion
+    when: ["-"]
+  - push:
+    - $Registry$ComposeProjectName/id:$ID
+    - $Registry$ComposeProjectName/id:latest
+  - id: cd
+    build: -t $Registry$ComposeProjectName/cd:$ID -f $ServicesPath/cd/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CDBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
+    when: ["-"]
+  - push: 
+    - $Registry$ComposeProjectName/cd:$ID
+    - $Registry$ComposeProjectName/cd:latest
+  - id: cd-sxa
+    build: -t $Registry$ComposeProjectName/cd-sxa:$ID -f $ServicesPath/cd-sxa/dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/cd:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["cd"]
+  - push:
+    - $Registry$ComposeProjectName/cd-sxa:$ID
+    - $Registry$ComposeProjectName/cd-sxa:latest
+  - id: cm-spe
+    build: -t $Registry$ComposeProjectName/cm-spe:$ID -f $ServicesPath/cm-spe/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CMBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage --build-arg SMS_IMAGE=$SitecoreModuleRegistry$SMSAssetImage
+    when: ["-"]
+  - push: 
+    - $Registry$ComposeProjectName/cm-spe:$ID
+    - $Registry$ComposeProjectName/cm-spe:latest
+  - id: cm-spe-hrz
+    build: -t $Registry$ComposeProjectName/cm-hrz:$ID -f $ServicesPath/cm-hrz/dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/cm-spe:$ID --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
+    when: ["cm-spe"]
+  - push:
+    - $Registry$ComposeProjectName/cm-hrz:$ID
+    - $Registry$ComposeProjectName/cm-hrz:latest
+  - id: cm-sxa
+    build: -t $Registry$ComposeProjectName/cm-sxa:$ID -f $ServicesPath/cm-sxa/dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/cm-spe:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["cm-spe"]
+  - push: 
+    - $Registry$ComposeProjectName/cm-sxa:$ID
+    - $Registry$ComposeProjectName/cm-sxa:latest
+  - id: cm-sxa-hrz
+    build: -t $Registry$ComposeProjectName/cm-sxa-hrz:$ID -f $ServicesPath/cm-sxa/dockerfile . --build-arg BASE_IMAGE=$Registry$ComposeProjectName/cm-hrz:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["cm-spe-hrz"]
+  - push:
+    - $Registry$ComposeProjectName/cm-sxa-hrz:$ID
+    - $Registry$ComposeProjectName/cm-sxa-hrz:latest
+  - id: xdbsearchworker
+    build: -t $Registry$ComposeProjectName/xdbsearchworker:$ID -f $ServicesPath/xdbsearchworker/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBSearchWorkerBaseImage:$SitecoreVersion
+    when: ["-"]
+  - push:
+    - $Registry$ComposeProjectName/xdbsearchworker:$ID
+    - $Registry$ComposeProjectName/xdbsearchworker:latest
+  - id: xdbautomationworker
+    build: -t $Registry$ComposeProjectName/xdbautomationworker:$ID -f $ServicesPath/xdbautomationworker/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBAUTOMATIONBaseImage:$SitecoreVersion
+    when: ["-"]
+  - push:
+    - $Registry$ComposeProjectName/xdbautomationworker:$ID
+    - $Registry$ComposeProjectName/xdbautomationworker:latest
+  - id: cortexprocessingworker
+    build: -t $Registry$ComposeProjectName/cortexprocessingworker:$ID -f $ServicesPath/cortexprocessingworker/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CortexProcBaseImage:$SitecoreVersion
+    when: ["-"]
+  - push:
+    - $Registry$ComposeProjectName/cortexprocessingworker:$ID
+    - $Registry$ComposeProjectName/cortexprocessingworker:latest
+  - id: xconnect
+    build: -t $Registry$ComposeProjectName/xconnect:$ID -f $ServicesPath/xconnect/dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XConnectBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
+    when: ["-"]
+  - push:
+    - $Registry$ComposeProjectName/xconnect:$ID
+    - $Registry$ComposeProjectName/xconnect:latest
+
