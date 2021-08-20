@@ -4,13 +4,13 @@ alias:
     - env.yml
 steps:
   - id: cd
-    build: -t $Registry/$ComposeProjectName/cd:$ID -f $ServicesPath/cd/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CDBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
+    build: -t $Registry/$ComposeProjectName/cd:$ID -t $Registry/$ComposeProjectName/cd:latest -f $ServicesPath/cd/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CDBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
     when: ["-"]
   - push: 
     - $Registry/$ComposeProjectName/cd:$ID
     - $Registry/$ComposeProjectName/cd:latest
   - id: cd-sxa
-    build: -t $Registry/$ComposeProjectName/cd-sxa:$ID -f $ServicesPath/cd-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cd:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    build: -t $Registry/$ComposeProjectName/cd-sxa:$ID -t $Registry/$ComposeProjectName/cd-sxa:latest -f $ServicesPath/cd-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cd:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
     when: ["cd"]
   - push:
     - $Registry/$ComposeProjectName/cd-sxa:$ID

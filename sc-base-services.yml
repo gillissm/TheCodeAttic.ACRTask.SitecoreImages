@@ -4,27 +4,26 @@ alias:
     - env.yml
 steps:
   - id: xdbsearchworker
-    build: -t $Registry/$ComposeProjectName/xdbsearchworker:$ID -f $ServicesPath/xdbsearchworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBSearchWorkerBaseImage:$SitecoreVersion
+    build: -t $Registry/$ComposeProjectName/xdbsearchworker:$ID -t $Registry/$ComposeProjectName/xdbsearchworker:latest -f $ServicesPath/xdbsearchworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBSearchWorkerBaseImage:$SitecoreVersion
     when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/xdbsearchworker:$ID
     - $Registry/$ComposeProjectName/xdbsearchworker:latest
   - id: xdbautomationworker
-    build: -t $Registry/$ComposeProjectName/xdbautomationworker:$ID -f $ServicesPath/xdbautomationworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBAutomationBaseImage:$SitecoreVersion
+    build: -t $Registry/$ComposeProjectName/xdbautomationworker:$ID -t $Registry/$ComposeProjectName/xdbautomationworker:latest -f $ServicesPath/xdbautomationworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBAutomationBaseImage:$SitecoreVersion
     when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/xdbautomationworker:$ID
     - $Registry/$ComposeProjectName/xdbautomationworker:latest
   - id: cortexprocessingworker
-    build: -t $Registry/$ComposeProjectName/cortexprocessingworker:$ID -f $ServicesPath/cortexprocessingworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CortexProcBaseImage:$SitecoreVersion
+    build: -t $Registry/$ComposeProjectName/cortexprocessingworker:$ID -t $Registry/$ComposeProjectName/cortexprocessingworker:latest -f $ServicesPath/cortexprocessingworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CortexProcBaseImage:$SitecoreVersion
     when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/cortexprocessingworker:$ID
     - $Registry/$ComposeProjectName/cortexprocessingworker:latest
   - id: xconnect
-    build: -t $Registry/$ComposeProjectName/xconnect:$ID -f $ServicesPath/xconnect/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XConnectBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
+    build: -t $Registry/$ComposeProjectName/xconnect:$ID -t $Registry/$ComposeProjectName/xconnect:latest -f $ServicesPath/xconnect/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XConnectBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
     when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/xconnect:$ID
     - $Registry/$ComposeProjectName/xconnect:latest
-
