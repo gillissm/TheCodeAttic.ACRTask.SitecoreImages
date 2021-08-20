@@ -3,27 +3,27 @@ alias:
   src:
     - env.yml
 steps:
-  # - id: mssql-spe
-  #   build: -t $Registry/$ComposeProjectName/mssql-spe:$TagVersion -t $Registry/$ComposeProjectName/mssql-spe:latest -f $ServicesPath/mssql-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SQLBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage
-  #   when: ["-"]
-  # - push:
-  #   - $Registry/$ComposeProjectName/mssql-spe:$TagVersion
-  #   - $Registry/$ComposeProjectName/mssql-spe:latest
-  # - id: mssql-hrz
-  #   build: -t $Registry/$ComposeProjectName/mssql-hrz:$TagVersion -t $Registry/$ComposeProjectName/mssql-hrz:latest -f $ServicesPath/mssql-hrz/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-spe:$TagVersion --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
-  #   when: ["mssql-spe"]
-  # - push:
-  #   - $Registry/$ComposeProjectName/mssql-hrz:$TagVersion
-  #   - $Registry/$ComposeProjectName/mssql-hrz:latest
+  - id: mssql-spe
+    build: -t $Registry/$ComposeProjectName/mssql-spe:$TagVersion -t $Registry/$ComposeProjectName/mssql-spe:latest -f $ServicesPath/mssql-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SQLBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage
+    when: ["-"]
+  - push:
+    - $Registry/$ComposeProjectName/mssql-spe:$TagVersion
+    - $Registry/$ComposeProjectName/mssql-spe:latest
+  - id: mssql-hrz
+    build: -t $Registry/$ComposeProjectName/mssql-hrz:$TagVersion -t $Registry/$ComposeProjectName/mssql-hrz:latest -f $ServicesPath/mssql-hrz/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-spe:$TagVersion --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
+    when: ["mssql-spe"]
+  - push:
+    - $Registry/$ComposeProjectName/mssql-hrz:$TagVersion
+    - $Registry/$ComposeProjectName/mssql-hrz:latest
   - id: mssql-sxa
     build: -t $Registry/$ComposeProjectName/mssql-sxa:$TagVersion -t $Registry/$ComposeProjectName/mssql-sxa:latest -f $ServicesPath/mssql-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-spe:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
-    # when: ["mssql-spe"]
+    when: ["mssql-spe"]
   - push:
     - $Registry/$ComposeProjectName/mssql-sxa:$TagVersion
     - $Registry/$ComposeProjectName/mssql-sxa:latest
   - id: mssql-sxa-hrz
     build: -t $Registry/$ComposeProjectName/mssql-sxa-hrz:$TagVersion -t $Registry/$ComposeProjectName/mssql-sxa-hrz:latest -f $ServicesPath/mssql-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-hrz:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
-   # when: ["mssql-hrz"]
+    when: ["mssql-hrz"]
   - push:
     - $Registry/$ComposeProjectName/mssql-sxa-hrz:$TagVersion
     - $Registry/$ComposeProjectName/mssql-sxa-hrz:latest
