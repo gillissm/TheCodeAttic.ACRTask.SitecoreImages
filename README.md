@@ -4,6 +4,21 @@ Files to Support ACR Task to automate Sitecore Image builds.
 
 ## Task Create Scripts
 
+To help facilitate smaller task runs as well as allow for commit triggers to for specific images, multiple branches have been created tied to a similarly named task file.
+
+The mapping is
+
+**Task YAML** | **Branch** | **Notes**
+--------------|-------------|-----------
+sc-base-image | main | will run builds for all images
+sc-base-cd | cd | use to create CD images
+sc-base-cm | cm | use to create CM images
+sc-base-solr | solr | use to create solr-init images
+sc-base-sql | sql | use to create SQL images
+sc-base-services | services | use to create XDB related services, such as XConnect
+
+Following are the basic task create commands you will need to run.
+
 ```powershell
 
 # Create code commit trigger task
