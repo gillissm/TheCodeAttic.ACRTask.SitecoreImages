@@ -3,15 +3,15 @@ alias:
   src:
     - env.yml
 steps:
-  # - id: cd
-  #   build: -t $Registry/$ComposeProjectName/cd:$TagVersion -t $Registry/$ComposeProjectName/cd:latest -f $ServicesPath/cd/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CDBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
-  #   when: ["-"]
-  # - push: 
-  #   - $Registry/$ComposeProjectName/cd:$TagVersion
-  #   - $Registry/$ComposeProjectName/cd:latest
+  - id: cd
+    build: -t $Registry/$ComposeProjectName/cd:$TagVersion -t $Registry/$ComposeProjectName/cd:latest -f $ServicesPath/cd/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CDBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
+    when: ["-"]
+  - push: 
+    - $Registry/$ComposeProjectName/cd:$TagVersion
+    - $Registry/$ComposeProjectName/cd:latest
   - id: cd-sxa
     build: -t $Registry/$ComposeProjectName/cd-sxa:$TagVersion -t $Registry/$ComposeProjectName/cd-sxa:latest -f $ServicesPath/cd-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cd:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
-   # when: ["cd"]
+    when: ["cd"]
   - push:
     - $Registry/$ComposeProjectName/cd-sxa:$TagVersion
     - $Registry/$ComposeProjectName/cd-sxa:latest
