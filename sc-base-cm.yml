@@ -4,26 +4,26 @@ alias:
     - env.yml
 steps:
   - id: cm-spe
-    build: -t $Registry/$ComposeProjectName/cm-spe:$ID -f $ServicesPath/cm-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CMBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage --build-arg SMS_IMAGE=$SitecoreModuleRegistry$SMSAssetImage
+    build: -t $Registry/$ComposeProjectName/cm-spe:$TagVersion -t $Registry/$ComposeProjectName/cm-spe:latest -f $ServicesPath/cm-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CMBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage --build-arg SMS_IMAGE=$SitecoreModuleRegistry$SMSAssetImage
     when: ["-"]
   - push: 
-    - $Registry/$ComposeProjectName/cm-spe:$ID
+    - $Registry/$ComposeProjectName/cm-spe:$TagVersion
     - $Registry/$ComposeProjectName/cm-spe:latest
   - id: cm-hrz
-    build: -t $Registry/$ComposeProjectName/cm-hrz:$ID -f $ServicesPath/cm-hrz/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-spe:$ID --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
+    build: -t $Registry/$ComposeProjectName/cm-hrz:$TagVersion -t $Registry/$ComposeProjectName/cm-hrz:latest -f $ServicesPath/cm-hrz/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-spe:$TagVersion --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
     when: ["cm-spe"]
   - push:
-    - $Registry/$ComposeProjectName/cm-hrz:$ID
+    - $Registry/$ComposeProjectName/cm-hrz:$TagVersion
     - $Registry/$ComposeProjectName/cm-hrz:latest
   - id: cm-sxa
-    build: -t $Registry/$ComposeProjectName/cm-sxa:$ID -f $ServicesPath/cm-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-spe:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    build: -t $Registry/$ComposeProjectName/cm-sxa:$TagVersion -t $Registry/$ComposeProjectName/cm-sxa:latest -f $ServicesPath/cm-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-spe:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
     when: ["cm-spe"]
   - push: 
-    - $Registry/$ComposeProjectName/cm-sxa:$ID
+    - $Registry/$ComposeProjectName/cm-sxa:$TagVersion
     - $Registry/$ComposeProjectName/cm-sxa:latest
   - id: cm-sxa-hrz
-    build: -t $Registry/$ComposeProjectName/cm-sxa-hrz:$ID -f $ServicesPath/cm-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-hrz:$ID --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    build: -t $Registry/$ComposeProjectName/cm-sxa-hrz:$TagVersion -t $Registry/$ComposeProjectName/cm-sxa-hrz:latest -f $ServicesPath/cm-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-hrz:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
     when: ["cm-hrz"]
   - push:
-    - $Registry/$ComposeProjectName/cm-sxa-hrz:$ID
+    - $Registry/$ComposeProjectName/cm-sxa-hrz:$TagVersion
     - $Registry/$ComposeProjectName/cm-sxa-hrz:latest
