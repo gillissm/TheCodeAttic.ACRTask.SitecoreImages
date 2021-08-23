@@ -19,6 +19,8 @@ sc-base-services | services | use to create XDB related services, such as XConne
 
 Following are the basic task create commands you will need to run.
 
+Be sure to fork this repository before connecting it to an ACR Task, or my commits will trigger builds in your environment, which I do not think you'll want.
+
 ```powershell
 
 # Create code commit trigger task
