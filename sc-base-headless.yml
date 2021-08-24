@@ -5,7 +5,7 @@ alias:
     - env-headless.yml
 steps:
   - id: nodejs
-    build: -t $Registry/$AssetProjectName/nodejs:$NodeJsVersion -t $Registry/$AssetProjectName/nodejs:latest -f $ServicesPath/nodejs/Dockerfile . --build-arg PARENT_IMAGE=$NodeJsParentImage
+    build: -t $Registry/$AssetProjectName/nodejs:$NodeJsVersion -t $Registry/$AssetProjectName/nodejs:latest -f $ServicesPath/nodejs/Dockerfile . --build-arg PARENT_IMAGE=$NodeJsParentImage --build-arg NODEJS_VERSION=$NodeJsVersion
     when: ["-"]
   - push: 
     - $Registry/$AssetProjectName/nodejs:$NodeJsVersion
