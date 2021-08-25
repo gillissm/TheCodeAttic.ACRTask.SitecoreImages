@@ -4,8 +4,8 @@
 # Basic Windows node.js image for use as a parent image in the solution.
 #
 
-ARG PARENT_IMAGE
-FROM $PARENT_IMAGE
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
 
 ARG NODEJS_VERSION
 
