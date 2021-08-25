@@ -40,3 +40,9 @@ steps:
   - push:
     - $Registry/$ComposeProjectName/cd-headless:$TagVersion
     - $Registry/$ComposeProjectName/cd-headless:latest
+  - id: headlesshost
+    build: -t $Registry/$ComposeProjectName/headlesshost:$TagVersion -t $Registry/$ComposeProjectName/headlesshost:latest -f $ServicesPath/headlesshost/Dockerfile . --build-arg BASE_IMAGE=$Registry/$AssetProjectName/nodejs:$TagVersion
+    when: ["nodejs"]
+  - push:
+    - $Registry/$ComposeProjectName/headlesshost:$TagVersion
+    - $Registry/$ComposeProjectName/headlesshost:latest
