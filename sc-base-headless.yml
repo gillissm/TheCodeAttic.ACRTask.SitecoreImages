@@ -4,34 +4,34 @@ alias:
     - env.yml
     - env-headless.yml
 steps:
-  - id: nodejs
-    build: -t $Registry/$AssetProjectName/nodejs:$NodeJsVersion -t $Registry/$AssetProjectName/nodejs:latest -f $ServicesPath/nodejs/Dockerfile . --build-arg PARENT_IMAGE=$NodeJsParentImage --build-arg NODEJS_VERSION=$NodeJsVersion
+  # - id: nodejs
+  #   build: -t $Registry/$AssetProjectName/nodejs:$NodeJsVersion -t $Registry/$AssetProjectName/nodejs:latest -f $ServicesPath/nodejs/Dockerfile . --build-arg PARENT_IMAGE=$NodeJsParentImage --build-arg NODEJS_VERSION=$NodeJsVersion
+  #   cache: enabled
+  #   when: ["-"]
+  # - push: 
+  #   - $Registry/$AssetProjectName/nodejs:$NodeJsVersion
+  #   - $Registry/$AssetProjectName/nodejs:latest
+  - id: mssql-headless-hrz
+    build: -t $Registry/$ComposeProjectName/mssql-headless-hrz:$TagVersion -t $Registry/$ComposeProjectName/mssql-headless-hrz:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-hrz:latest --build-arg ASSET_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
     cache: enabled
     when: ["-"]
-  - push: 
-    - $Registry/$AssetProjectName/nodejs:$NodeJsVersion
-    - $Registry/$AssetProjectName/nodejs:latest
-  # - id: mssql-headless-hrz
-  #   build: -t $Registry/$ComposeProjectName/mssql-headless-hrz:$TagVersion -t $Registry/$ComposeProjectName/mssql-headless-hrz:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-hrz:latest --build-arg ASSET_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
-  #   cache: enabled
-  #   when: ["-"]
-  # - push:
-  #   - $Registry/$ComposeProjectName/mssql-headless-hrz:$TagVersion
-  #   - $Registry/$ComposeProjectName/mssql-headless-hrz:latest
-  # - id: mssql-headless
-  #   build: -t $Registry/$ComposeProjectName/mssql-headless:$TagVersion -t $Registry/$ComposeProjectName/mssql-headless:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-spe:$TagVersion --build-arg ASSET_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
-  #   cache: enabled
-  #   when: ["-"]
-  # - push:
-  #   - $Registry/$ComposeProjectName/mssql-headless:$TagVersion
-  #   - $Registry/$ComposeProjectName/mssql-headless:latest
-  # - id: cm-headless
-  #   build: -t $Registry/$ComposeProjectName/cm-headless:$TagVersion -t $Registry/$ComposeProjectName/cm-headless:latest -f $ServicesPath/cm-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-spe:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
-  #   cache: enabled
-  #   when: ["-"]
-  # - push:
-  #   - $Registry/$ComposeProjectName/cm-headless:$TagVersion
-  #   - $Registry/$ComposeProjectName/cm-headless:latest
+  - push:
+    - $Registry/$ComposeProjectName/mssql-headless-hrz:$TagVersion
+    - $Registry/$ComposeProjectName/mssql-headless-hrz:latest
+  - id: mssql-headless
+    build: -t $Registry/$ComposeProjectName/mssql-headless:$TagVersion -t $Registry/$ComposeProjectName/mssql-headless:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-spe:$TagVersion --build-arg ASSET_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
+    cache: enabled
+    when: ["-"]
+  - push:
+    - $Registry/$ComposeProjectName/mssql-headless:$TagVersion
+    - $Registry/$ComposeProjectName/mssql-headless:latest
+  - id: cm-headless
+    build: -t $Registry/$ComposeProjectName/cm-headless:$TagVersion -t $Registry/$ComposeProjectName/cm-headless:latest -f $ServicesPath/cm-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-spe:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
+    cache: enabled
+    when: ["-"]
+  - push:
+    - $Registry/$ComposeProjectName/cm-headless:$TagVersion
+    - $Registry/$ComposeProjectName/cm-headless:latest
   # - id: cm-headless-hrz
   #   build: -t $Registry/$ComposeProjectName/cm-headless-hrz:$TagVersion -t $Registry/$ComposeProjectName/cm-headless-hrz:latest -f $ServicesPath/cm-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-hrz:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
   #   cache: enabled
