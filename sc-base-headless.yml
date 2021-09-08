@@ -11,35 +11,35 @@ steps:
     - $Registry/$AssetProjectName/nodejs:$NodeJsVersion
     - $Registry/$AssetProjectName/nodejs:latest
   - id: mssql-headless-hrz
-    build: -t $Registry/$ComposeProjectName/mssql-headless-hrz:$TagVersion -t $Registry/$ComposeProjectName/mssql-headless-hrz:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-hrz:latest --build-arg ASSET_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
+    build: -t $Registry/$ComposeProjectName/mssql-xm-headless-hrz:$TagVersion -t $Registry/$ComposeProjectName/mssql-xm-headless-hrz:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-xm-hrz:latest --build-arg ASSET_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
 #    when: ["-"]
   - push:
-    - $Registry/$ComposeProjectName/mssql-headless-hrz:$TagVersion
-    - $Registry/$ComposeProjectName/mssql-headless-hrz:latest
+    - $Registry/$ComposeProjectName/mssql-xm-headless-hrz:$TagVersion
+    - $Registry/$ComposeProjectName/mssql-xm-headless-hrz:latest
   - id: mssql-headless
-    build: -t $Registry/$ComposeProjectName/mssql-headless:$TagVersion -t $Registry/$ComposeProjectName/mssql-headless:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-spe:$TagVersion --build-arg ASSET_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
+    build: -t $Registry/$ComposeProjectName/mssql-xm-headless:$TagVersion -t $Registry/$ComposeProjectName/mssql-xm-headless:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/mssql-xm-spe:$TagVersion --build-arg ASSET_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
 #    when: ["-"]
   - push:
-    - $Registry/$ComposeProjectName/mssql-headless:$TagVersion
-    - $Registry/$ComposeProjectName/mssql-headless:latest
+    - $Registry/$ComposeProjectName/mssql-xm-headless:$TagVersion
+    - $Registry/$ComposeProjectName/mssql-xm-headless:latest
   - id: cm-headless
-    build: -t $Registry/$ComposeProjectName/cm-headless:$TagVersion -t $Registry/$ComposeProjectName/cm-headless:latest -f $ServicesPath/cm-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-spe:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
+    build: -t $Registry/$ComposeProjectName/cm-xm-headless:$TagVersion -t $Registry/$ComposeProjectName/cm-xm-headless:latest -f $ServicesPath/cm-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-xm-spe:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
 #    when: ["-"]
   - push:
-    - $Registry/$ComposeProjectName/cm-headless:$TagVersion
-    - $Registry/$ComposeProjectName/cm-headless:latest
+    - $Registry/$ComposeProjectName/cm-xm-headless:$TagVersion
+    - $Registry/$ComposeProjectName/cm-xm-headless:latest
   - id: cm-headless-hrz
-    build: -t $Registry/$ComposeProjectName/cm-headless-hrz:$TagVersion -t $Registry/$ComposeProjectName/cm-headless-hrz:latest -f $ServicesPath/cm-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-hrz:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
+    build: -t $Registry/$ComposeProjectName/cm-xm-headless-hrz:$TagVersion -t $Registry/$ComposeProjectName/cm-xm-headless-hrz:latest -f $ServicesPath/cm-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-xm-hrz:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
 #    when: ["-"]
   - push:
-    - $Registry/$ComposeProjectName/cm-headless-hrz:$TagVersion
-    - $Registry/$ComposeProjectName/cm-headless-hrz:latest
+    - $Registry/$ComposeProjectName/cm-xm-headless-hrz:$TagVersion
+    - $Registry/$ComposeProjectName/cm-xm-headless-hrz:latest
   - id: cd-headless
-    build: -t $Registry/$ComposeProjectName/cd-headless:$TagVersion -t $Registry/$ComposeProjectName/cd-headless:latest -f $ServicesPath/cd-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cd:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
+    build: -t $Registry/$ComposeProjectName/cd-xm-headless:$TagVersion -t $Registry/$ComposeProjectName/cd-xm-headless:latest -f $ServicesPath/cd-headless/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cd-xm:$TagVersion --build-arg HEADLESS_SERVICES_IMAGE=$SitecoreModuleRegistry$HeadlessAssetImage
 #    when: ["-"]
   - push:
-    - $Registry/$ComposeProjectName/cd-headless:$TagVersion
-    - $Registry/$ComposeProjectName/cd-headless:latest
+    - $Registry/$ComposeProjectName/cd-xm-headless:$TagVersion
+    - $Registry/$ComposeProjectName/cd-xm-headless:latest
   - id: headlesshost
     build: -t $Registry/$ComposeProjectName/headlesshost:$TagVersion -t $Registry/$ComposeProjectName/headlesshost:latest -f $ServicesPath/headlesshost/Dockerfile . --build-arg BASE_IMAGE=$Registry/$AssetProjectName/nodejs:$TagVersion
     when: ["nodejs"]

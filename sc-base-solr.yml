@@ -15,3 +15,15 @@ steps:
   - push:
     - $Registry/$ComposeProjectName/solr-init-sxa:$TagVersion
     - $Registry/$ComposeProjectName/solr-init-sxa:latest
+  - id: solr-xm-init
+    build: -t $Registry/$ComposeProjectName/solr-xm-init:$TagVersion -t $Registry/$ComposeProjectName/solr-xm-init:latest -f $ServicesPath/solr/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SOLRXMBaseImage:$SitecoreVersion
+    when: ["-"]
+  - push:
+    - $Registry/$ComposeProjectName/solr-xm-init:$TagVersion
+    - $Registry/$ComposeProjectName/solr-xm-init:latest
+  - id: solr-xm-init-sxa
+    build: -t $Registry/$ComposeProjectName/solr-xm-init-sxa:$TagVersion -t $Registry/$ComposeProjectName/solr-xm-init-sxa:latest -f $ServicesPath/solr-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/solr-xm-init:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["solr-init"]    
+  - push:
+    - $Registry/$ComposeProjectName/solr-xm-init-sxa:$TagVersion
+    - $Registry/$ComposeProjectName/solr-xm-init-sxa:latest
