@@ -5,25 +5,21 @@ alias:
 steps:
   - id: xdbsearchworker
     build: -t $Registry/$ComposeProjectName/xdbsearchworker:$TagVersion -t $Registry/$ComposeProjectName/xdbsearchworker:latest -f $ServicesPath/xdbsearchworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBSearchWorkerBaseImage:$SitecoreVersion
-    when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/xdbsearchworker:$TagVersion
     - $Registry/$ComposeProjectName/xdbsearchworker:latest
   - id: xdbautomationworker
     build: -t $Registry/$ComposeProjectName/xdbautomationworker:$TagVersion -t $Registry/$ComposeProjectName/xdbautomationworker:latest -f $ServicesPath/xdbautomationworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XDBAutomationBaseImage:$SitecoreVersion
-    when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/xdbautomationworker:$TagVersion
     - $Registry/$ComposeProjectName/xdbautomationworker:latest
   - id: cortexprocessingworker
     build: -t $Registry/$ComposeProjectName/cortexprocessingworker:$TagVersion -t $Registry/$ComposeProjectName/cortexprocessingworker:latest -f $ServicesPath/cortexprocessingworker/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CortexProcBaseImage:$SitecoreVersion
-    when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/cortexprocessingworker:$TagVersion
     - $Registry/$ComposeProjectName/cortexprocessingworker:latest
   - id: xconnect
     build: -t $Registry/$ComposeProjectName/xconnect:$TagVersion -t $Registry/$ComposeProjectName/xconnect:latest -f $ServicesPath/xconnect/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$XConnectBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
-    when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/xconnect:$TagVersion
     - $Registry/$ComposeProjectName/xconnect:latest
