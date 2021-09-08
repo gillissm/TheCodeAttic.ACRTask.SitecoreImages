@@ -27,3 +27,27 @@ steps:
   - push:
     - $Registry/$ComposeProjectName/cm-sxa-hrz:$TagVersion
     - $Registry/$ComposeProjectName/cm-sxa-hrz:latest
+  - id: cm-xm-spe
+    build: -t $Registry/$ComposeProjectName/cm-xm-spe:$TagVersion -t $Registry/$ComposeProjectName/cm-xm-spe:latest -f $ServicesPath/cm-xm-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CMXMBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage --build-arg SMS_IMAGE=$SitecoreModuleRegistry$SMSAssetImage
+    when: ["-"]
+  - push: 
+    - $Registry/$ComposeProjectName/cm-xm-spe:$TagVersion
+    - $Registry/$ComposeProjectName/cm-xm-spe:latest
+  - id: cm-xm-hrz
+    build: -t $Registry/$ComposeProjectName/cm-xm-hrz:$TagVersion -t $Registry/$ComposeProjectName/cm-xm-hrz:latest -f $ServicesPath/cm-xm-hrz/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-xm-spe:$TagVersion --build-arg HRZ_IMAGE=$SitecoreModuleRegistry$HRZAssetImage
+    when: ["cm-xm-spe"]
+  - push:
+    - $Registry/$ComposeProjectName/cm-xm-hrz:$TagVersion
+    - $Registry/$ComposeProjectName/cm-xm-hrz:latest
+  - id: cm-xm-sxa
+    build: -t $Registry/$ComposeProjectName/cm-xm-sxa:$TagVersion -t $Registry/$ComposeProjectName/cm-xm-sxa:latest -f $ServicesPath/cm-xm-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-xm-spe:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["cm-xm-spe"]
+  - push: 
+    - $Registry/$ComposeProjectName/cm-xm-sxa:$TagVersion
+    - $Registry/$ComposeProjectName/cm-xm-sxa:latest
+  - id: cm-xm-sxa-hrz
+    build: -t $Registry/$ComposeProjectName/cm-xm-sxa-hrz:$TagVersion -t $Registry/$ComposeProjectName/cm-xm-sxa-hrz:latest -f $ServicesPath/cm-xm-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cm-xm-hrz:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["cm-xm-hrz"]
+  - push:
+    - $Registry/$ComposeProjectName/cm-xm-sxa-hrz:$TagVersion
+    - $Registry/$ComposeProjectName/cm-xm-sxa-hrz:latest
