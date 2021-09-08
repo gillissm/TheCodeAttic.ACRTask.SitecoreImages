@@ -5,7 +5,6 @@ alias:
 steps:
   - id: cm-spe
     build: -t $Registry/$ComposeProjectName/cm-spe:$TagVersion -t $Registry/$ComposeProjectName/cm-spe:latest -f $ServicesPath/cm-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CMBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage --build-arg SMS_IMAGE=$SitecoreModuleRegistry$SMSAssetImage
-    when: ["-"]
   - push: 
     - $Registry/$ComposeProjectName/cm-spe:$TagVersion
     - $Registry/$ComposeProjectName/cm-spe:latest
@@ -29,7 +28,6 @@ steps:
     - $Registry/$ComposeProjectName/cm-sxa-hrz:latest
   - id: cm-xm-spe
     build: -t $Registry/$ComposeProjectName/cm-xm-spe:$TagVersion -t $Registry/$ComposeProjectName/cm-xm-spe:latest -f $ServicesPath/cm-xm-spe/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CMXMBaseImage:$SitecoreVersion --build-arg SPE_IMAGE=$Registry/$SPEAssetImage --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage --build-arg SMS_IMAGE=$SitecoreModuleRegistry$SMSAssetImage
-    when: ["-"]
   - push: 
     - $Registry/$ComposeProjectName/cm-xm-spe:$TagVersion
     - $Registry/$ComposeProjectName/cm-xm-spe:latest

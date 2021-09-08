@@ -5,7 +5,6 @@ alias:
 steps:
   - id: cd
     build: -t $Registry/$ComposeProjectName/cd:$TagVersion -t $Registry/$ComposeProjectName/cd:latest -f $ServicesPath/cd/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CDBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
-    when: ["-"]
   - push: 
     - $Registry/$ComposeProjectName/cd:$TagVersion
     - $Registry/$ComposeProjectName/cd:latest
@@ -17,13 +16,12 @@ steps:
     - $Registry/$ComposeProjectName/cd-sxa:latest
   - id: cd-xm
     build: -t $Registry/$ComposeProjectName/cd-xm:$TagVersion -t $Registry/$ComposeProjectName/cd-xm:latest -f $ServicesPath/cd/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$CDXMBaseImage:$SitecoreVersion --build-arg TOOLING_IMAGE=$SitecoreToolsRegistry$SCToolingImage
-    when: ["-"]
   - push: 
     - $Registry/$ComposeProjectName/cd:$TagVersion
     - $Registry/$ComposeProjectName/cd:latest
   - id: cd-xm-sxa
-    build: -t $Registry/$ComposeProjectName/cd-xm-sxa:$TagVersion -t $Registry/$ComposeProjectName/cd-xm-sxa:latest -f $ServicesPath/cd-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cd:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
-    when: ["cd"]
+    build: -t $Registry/$ComposeProjectName/cd-xm-sxa:$TagVersion -t $Registry/$ComposeProjectName/cd-xm-sxa:latest -f $ServicesPath/cd-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/cd-xm:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
+    when: ["cd-xm"]
   - push:
     - $Registry/$ComposeProjectName/cd-xm-sxa:$TagVersion
     - $Registry/$ComposeProjectName/cd-xm-sxa:latest
