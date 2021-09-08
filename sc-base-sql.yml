@@ -5,7 +5,6 @@ alias:
 steps:
   - id: mssql-spe
     build: -t $Registry/$ComposeProjectName/mssql-spe:$TagVersion -t $Registry/$ComposeProjectName/mssql-spe:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SQLBaseImage:$SitecoreVersion --build-arg ASSET_IMAGE=$Registry/$SPEAssetImage
-    when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/mssql-spe:$TagVersion
     - $Registry/$ComposeProjectName/mssql-spe:latest
@@ -29,7 +28,6 @@ steps:
     - $Registry/$ComposeProjectName/mssql-sxa-hrz:latest
   - id: mssql-xm-spe
     build: -t $Registry/$ComposeProjectName/mssql-xm-spe:$TagVersion -t $Registry/$ComposeProjectName/mssql-xm-spe:latest -f $ServicesPath/mssql/Dockerfile . --build-arg BASE_IMAGE=$SitecoreDockerRegistry$SQLXMBaseImage:$SitecoreVersion --build-arg ASSET_IMAGE=$Registry/$SPEAssetImage
-    when: ["-"]
   - push:
     - $Registry/$ComposeProjectName/mssql-xm-spe:$TagVersion
     - $Registry/$ComposeProjectName/mssql-xm-spe:latest
