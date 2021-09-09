@@ -94,7 +94,7 @@ az acr task create `
   --base-image-trigger-enabled true `
   --git-access-token <Personal_Access_Token>
 
-  az acr task create `
+az acr task create `
   -n SitecoreBaseImages-SQL-XM `
   --registry thecodeatticimages `
   --file sc-base-sql-xm.yml `
