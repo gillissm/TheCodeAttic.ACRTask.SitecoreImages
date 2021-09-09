@@ -93,4 +93,14 @@ az acr task create `
   --commit-trigger-enabled true `
   --base-image-trigger-enabled true `
   --git-access-token <Personal_Access_Token>
+
+  az acr task create `
+  -n SitecoreBaseImages-SQL-XM `
+  --registry thecodeatticimages `
+  --file sc-base-sql-xm.yml `
+  --context 'https://github.com/gillissm/TheCodeAttic.ACRTask.SitecoreImages.git#sql-xm' `
+  --platform windows/amd64 `
+  --commit-trigger-enabled true `
+  --base-image-trigger-enabled true `
+  --git-access-token <Personal_Access_Token>
 ```
