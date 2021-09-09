@@ -35,7 +35,7 @@ steps:
     - $Registry/$ComposeProjectName/cd-xm-headless:$TagVersion
     - $Registry/$ComposeProjectName/cd-xm-headless:latest
   - id: headlesshost
-    build: -t $Registry/$ComposeProjectName/headlesshost:$TagVersion -t $Registry/$ComposeProjectName/headlesshost:latest -f $ServicesPath/headlesshost/Dockerfile . --build-arg BASE_IMAGE=$Registry/$AssetProjectName/nodejs:$TagVersion
+    build: -t $Registry/$ComposeProjectName/headlesshost:$TagVersion -t $Registry/$ComposeProjectName/headlesshost:latest -f $ServicesPath/headlesshost/Dockerfile . --build-arg BASE_IMAGE=$Registry/$AssetProjectName/nodejs:$NodeJsVersion
     when: ["nodejs"]
   - push:
     - $Registry/$ComposeProjectName/headlesshost:$TagVersion
