@@ -21,7 +21,7 @@ steps:
     - $Registry/$ComposeProjectName/solr-xm-init:latest
   - id: solr-xm-init-sxa
     build: -t $Registry/$ComposeProjectName/solr-xm-init-sxa:$TagVersion -t $Registry/$ComposeProjectName/solr-xm-init-sxa:latest -f $ServicesPath/solr-sxa/Dockerfile . --build-arg BASE_IMAGE=$Registry/$ComposeProjectName/solr-xm-init:$TagVersion --build-arg SXA_IMAGE=$SitecoreModuleRegistry$SXAAssetImage
-    when: ["solr-init"]    
+    when: ["solr-xm-init"]    
   - push:
     - $Registry/$ComposeProjectName/solr-xm-init-sxa:$TagVersion
     - $Registry/$ComposeProjectName/solr-xm-init-sxa:latest
